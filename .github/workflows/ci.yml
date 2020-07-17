@@ -35,7 +35,7 @@ jobs:
       with:
         name: TCXStack
         template: ./cloudformation/template.yml
-
+        no-fail-on-empty-changeset: "1"
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
