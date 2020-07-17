@@ -30,6 +30,7 @@ jobs:
         aws-region: eu-north-1
 
     - name: Deploy stack
+      id: deploy-stack
       uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
       with:
         name: TCXStack
@@ -38,7 +39,7 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
-      run: echo Hello, world!
+      run: echo ${{ steps.deploy-stack.outputs }} Hello, world!
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
