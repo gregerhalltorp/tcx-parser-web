@@ -1,0 +1,3 @@
+Resources:
+  WebBucket:
+    Type: AWS::S3::Bucket
