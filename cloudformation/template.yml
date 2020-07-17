@@ -1,3 +1,7 @@
 Resources:
   WebBucket:
     Type: AWS::S3::Bucket
+
+Outputs:
+  WebBucketName:
+    Value: !Ref WebBucket

@@ -39,7 +39,7 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
-      run: echo ${{ steps.deploy-stack.outputs }} Hello, world!
+      run: echo ${{ steps.deploy-stack.outputs.stack-id }} ${{ steps.deploy-stack.outputs.WebBucketName }} Hello, world!
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
