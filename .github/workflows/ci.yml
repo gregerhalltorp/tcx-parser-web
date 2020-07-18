@@ -37,6 +37,10 @@ jobs:
         template: ./cloudformation/template.yml
         no-fail-on-empty-changeset: "1"
 
+    - name: Sync to S3
+      run: |
+        aws s3 sync ./dist s3://${{ steps.deploy-stack.outputs.WebBucketName }}
+
     # Runs a single command using the runners shell
     - name: Run a one-line script
       run: echo ${{ steps.deploy-stack.outputs.stack-id }} ${{ steps.deploy-stack.outputs.WebBucketName }} Hello, world!
