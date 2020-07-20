@@ -1,0 +1,11 @@
+extends:
+  - airbnb
+  - airbnb/hooks
+  - prettier
+  - prettier/react
+overrides:
+  - files:
+      - "*.js"
+      - "*.jsx"
+globals:
+  document: readonly

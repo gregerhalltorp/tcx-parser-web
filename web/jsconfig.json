@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "esnext",
+    "checkJs": true,
+    "baseUrl": "src",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
