@@ -40,6 +40,7 @@ jobs:
     - name: Build Web
       run: |
         cd web
+        yarn
         yarn build
 
     - name: Sync to S3
