@@ -45,7 +45,7 @@ jobs:
 
     - name: Sync to S3
       run: |
-        aws s3 sync ./web/dist s3://${{ steps.deploy-stack.outputs.WebBucketName }} --delete
+        aws s3 sync ./web/dist s3://${{ steps.deploy-stack.outputs.WebBucket }} --delete
 
     # Runs a single command using the runners shell
     - name: Run a one-line script

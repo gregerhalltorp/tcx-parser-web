@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: "AWS::Serverless-2016-10-31"
+
+Description: TCX Parser Stack - Resources
+
+Resources:
+  LogBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: LogDeliveryWrite
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  WebBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LoggingConfiguration:
+        DestinationBucketName: !Ref LogBucket
+        LogFilePrefix: "origin/"
+
+Outputs:
+  WebBucket:
+    Description: Website bucket
+    Value: !Ref WebBucket
+  WebBucketName:
+    Description: Website bucket name
+    Value: !GetAtt WebBucket.DomainName
+  WebBucketArn:
+    Description: Website bucket locator
+    Value: !GetAtt WebBucket.Arn
+  LogBucket:
+    Description: Logging bucket
+    Value: !Ref LogBucket
+  LogBucketName:
+    Description: Website bucket name
+    Value: !GetAtt LogBucket.DomainName
+  LogBucketArn:
+    Description: Website bucket locator
+    Value: !GetAtt LogBucket.Arn

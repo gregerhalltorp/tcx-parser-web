@@ -1,7 +1,29 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: TCX Parser Stack
+
+Mappings:
+  Solution:
+    Constants:
+      Version: "v0.1"
+      SubDomain: "tcx"
+      DomainName: "gregerhalltorp.net"
+
 Resources:
-  WebBucket:
-    Type: AWS::S3::Bucket
+  ResourcesStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./resources.yml
 
 Outputs:
+  WebBucket:
+    Description: Website bucket
+    Value: !GetAtt ResourcesStack.Outputs.WebBucket
   WebBucketName:
-    Value: !Ref WebBucket
+    Description: Website bucket name
+    Value: !GetAtt ResourcesStack.Outputs.WebBucketName
+  LogBucket:
+    Description: Logging bucket
+    Value: !GetAtt ResourcesStack.Outputs.LogBucket
+  LogBucketName:
+    Description: Website bucket name
+    Value: !GetAtt ResourcesStack.Outputs.LogBucketName
