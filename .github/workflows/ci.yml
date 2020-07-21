@@ -29,12 +29,16 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-north-1
 
+    - name: Package templates
+      run: |
+        aws cloudformation package --template-file cloudformation/template.yml --s3-bucket cf-templates-gregerhalltorp.net --output-template-file cloudformation/packaged.template
+
     - name: Deploy stack
       id: deploy-stack
       uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
       with:
         name: TCXStack
-        template: ./cloudformation/template.yml
+        template: ./cloudformation/packaged.template
         no-fail-on-empty-changeset: "1"
 
     - name: Build Web
