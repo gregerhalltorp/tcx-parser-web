@@ -14,7 +14,17 @@ Resources:
     Properties:
       TemplateURL: ./resources.yml
 
+  CertStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./cert.yml
+      Parameters:
+        SubDomain: !FindInMap [Solution, Constants, SubDomain]
+        DomainName: !FindInMap [Solution, Constants, DomainName]
+
 Outputs:
+  SolutionVersion:
+    Value: !FindInMap [Solution, Constants, Version]
   WebBucket:
     Description: Website bucket
     Value: !GetAtt ResourcesStack.Outputs.WebBucket
@@ -27,3 +37,6 @@ Outputs:
   LogBucketName:
     Description: Website bucket name
     Value: !GetAtt ResourcesStack.Outputs.LogBucketName
+  CertificateArn:
+    Description: Issued certificate
+    Value: !GetAtt CertStack.Outputs.CertificateArn
