@@ -40,7 +40,7 @@ Resources:
           - Action:
               - s3:GetObject
             Effect: Allow
-            Resource: !Sub "${WebBucketArn}/^"
+            Resource: !Sub "${WebBucketArn}/*"
             Principal:
               CanonicalUser: !GetAtt CloudFrontOriginAccessIdentity.S3CanonicalUserId
 
