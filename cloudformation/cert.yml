@@ -6,12 +6,16 @@ Parameters:
     Type: String
   SubDomain:
     Type: String
+  Region:
+    Type: String
+    Default: "us-east-1"
 
 Resources:
   Certificate:
     Type: Custom::Certificate
     Properties:
-      DomainName: !Sub '${SubDomain}.${DomainName}'
+      DomainName: !Sub "${SubDomain}.${DomainName}"
+      Region: !Ref Region
       ValidationMethod: DNS
       ServiceToken: !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:binxio-cfn-certificate-provider"
 
@@ -27,7 +31,7 @@ Resources:
     Type: Custom::CertificateDNSRecord
     Properties:
       CertificateArn: !Ref Certificate
-      DomainName: !Sub '${SubDomain}.${DomainName}'
+      DomainName: !Sub "${SubDomain}.${DomainName}"
       ServiceToken: !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:binxio-cfn-certificate-provider"
 
   DomainValidationRecord:
@@ -37,7 +41,7 @@ Resources:
       RecordSets:
         - Name: !GetAtt CertificateDNSRecord.Name
           Type: !GetAtt CertificateDNSRecord.Type
-          TTL: '60'
+          TTL: "60"
           Weight: 1
           SetIdentifier: !Ref Certificate
           ResourceRecords:
@@ -46,7 +50,7 @@ Resources:
 Outputs:
   DNSRecord:
     Description: DNS record
-    Value: !Sub '${CertificateDNSRecord.Name} ${CertificateDNSRecord.Type} ${CertificateDNSRecord.Value}'
-  CertificateArn: 
+    Value: !Sub "${CertificateDNSRecord.Name} ${CertificateDNSRecord.Type} ${CertificateDNSRecord.Value}"
+  CertificateArn:
     Description: Issued certificate
     Value: !Ref Certificate
