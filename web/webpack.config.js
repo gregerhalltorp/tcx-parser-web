@@ -1,7 +1,8 @@
 const path = require('path');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const paths = require('./config/paths');
 const { getExtensions } = require('./config/extensions');
@@ -30,6 +31,9 @@ const config = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+    }),
+    new CopyPlugin({
+      patterns: [{ from: 'public/error/*', to: '.', flatten: true }],
     }),
   ],
   module: {

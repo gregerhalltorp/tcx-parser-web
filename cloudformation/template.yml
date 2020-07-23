@@ -22,6 +22,20 @@ Resources:
         SubDomain: !FindInMap [Solution, Constants, SubDomain]
         DomainName: !FindInMap [Solution, Constants, DomainName]
 
+  CloudFrontStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./cloudfront.yml
+      Parameters:
+        DomainName: !FindInMap [Solution, Constants, DomainName]
+        SubDomain: !FindInMap [Solution, Constants, SubDomain]
+        CertificateArn: !GetAtt CertStack.Outputs.CertificateArn
+        WebBucket: !GetAtt ResourcesStack.Outputs.WebBucket
+        WebBucketName: !GetAtt ResourcesStack.Outputs.WebBucketName
+        WebBucketArn: !GetAtt ResourcesStack.Outputs.WebBucketArn
+        LogBucket: !GetAtt ResourcesStack.Outputs.LogBucket
+        LogBucketName: !GetAtt ResourcesStack.Outputs.LogBucketName
+
 Outputs:
   SolutionVersion:
     Value: !FindInMap [Solution, Constants, Version]
@@ -40,3 +54,12 @@ Outputs:
   CertificateArn:
     Description: Issued certificate
     Value: !GetAtt CertStack.Outputs.CertificateArn
+  CFDistributionName:
+    Description: CloudFront distribution
+    Value: !GetAtt CloudFrontStack.Outputs.CloudFrontDistribution
+  LambdaEdgeFunctionVersion:
+    Description: Security Lambda version
+    Value: !GetAtt CloudFrontStack.Outputs.LambdaEdgeFunctionVersion
+  CloudFrontDomainName:
+    Description: Website address
+    Value: !GetAtt CloudFrontStack.Outputs.CloudFrontDomainName
